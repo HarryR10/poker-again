@@ -101,7 +101,17 @@ def kind(n, ranks):
 def two_pair(ranks):
     """Если есть две пары, то возврщает два соответствующих ранга,
     иначе возвращает None"""
-    return
+
+    first_range = []
+    reapeat = dict(Counter(ranks))
+    for x in reapeat:
+        if reapeat.get(x) == 2:
+            first_range.append(x)
+    if len(first_range) >= 1:
+        first_range.sort(reverse=True)
+        return first_range[0:2]
+    else:
+        return None
 
 
 def best_hand(hand):

@@ -24,6 +24,7 @@
 # -----------------
 
 import itertools
+from collections import Counter
 
 ranks_numbers = list(range(2, 15))
 ranks_numbers_revers_str = ' '.join(str(x) for x in ranks_numbers[:-14:-1])
@@ -84,7 +85,17 @@ def straight(ranks):
 def kind(n, ranks):
     """Возвращает первый ранг, который n раз встречается в данной руке.
     Возвращает None, если ничего не найдено"""
-    return
+
+    first_range = []
+    reapeat = dict(Counter(ranks))
+    for x in reapeat:
+        if reapeat.get(x) == n:
+            first_range.append(x)
+    if len(first_range) > 0:
+        return max(first_range)
+    else:
+        return None
+
 
 
 def two_pair(ranks):

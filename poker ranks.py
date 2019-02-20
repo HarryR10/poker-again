@@ -23,7 +23,8 @@
 # Можно свободно определять свои функции и т.п.
 # -----------------
 
-import itertools
+# import itertools
+from itertools import combinations
 from collections import Counter
 
 ranks_numbers = list(range(2, 15))
@@ -66,7 +67,7 @@ def card_ranks(hand):
 def flush(hand):
     """Возвращает True, если все карты одной масти"""
     its_flush = set(x[1] for x in hand)
-    if its_flush == 1:
+    if len(its_flush) == 1:
         return True
     else:
         return False
@@ -116,7 +117,9 @@ def two_pair(ranks):
 
 def best_hand(hand):
     """Из "руки" в 7 карт возвращает лучшую "руку" в 5 карт """
-    return
+    card_combinations = list(combinations(hand, 5))
+    best_of_hand = max(card_combinations, key=hand_rank)
+    return best_of_hand
 
 
 def best_wild_hand(hand):
@@ -146,5 +149,8 @@ def test_best_wild_hand():
     print('OK')
 
 if __name__ == '__main__':
+    print(best_hand("6C 7C 8C 9C TC 5C JS".split()))
+    print(best_hand("TD TC TH 7C 7D 8C 8S".split()))
+    print(best_hand("JD TC TH 7C 7D 7S 7H".split()))
     test_best_hand()
-    test_best_wild_hand()
+    # test_best_wild_hand()

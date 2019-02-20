@@ -60,17 +60,19 @@ def hand_rank(hand):
 def card_ranks(hand):
     """Возвращает список рангов (его числовой эквивалент),
     отсортированный от большего к меньшему"""
-    ranks_sorted = sorted([dict_card.get(x[0]) for x in hand], reverse=True)
-    return ranks_sorted
+    # ranks_sorted = sorted([dict_card.get(x[0]) for x in hand], reverse=True)
+    # return ranks_sorted
+    return sorted([dict_card.get(x[0]) for x in hand], reverse=True)
 
 
 def flush(hand):
     """Возвращает True, если все карты одной масти"""
-    its_flush = set(x[1] for x in hand)
-    if len(its_flush) == 1:
-        return True
-    else:
-        return False
+    # its_flush = set(x[1] for x in hand)
+    # if len(its_flush) == 1:
+    #     return True
+    # else:
+    #     return False
+    return len(set(x[1] for x in hand)) == 1
 
 
 def straight(ranks):
@@ -152,5 +154,12 @@ if __name__ == '__main__':
     print(best_hand("6C 7C 8C 9C TC 5C JS".split()))
     print(best_hand("TD TC TH 7C 7D 8C 8S".split()))
     print(best_hand("JD TC TH 7C 7D 7S 7H".split()))
+    print(flush(['6C', '7C', '8C', '9C', 'TC']))
+    print(card_ranks(['6C', '7C', '8C', '9C', 'TC']))
+    ranks = card_ranks(['6C', '7C', '8C', '9C', 'TC'])
+    its_street2 = set(x for x in ranks)
+
+    print(its_street2)
+
     test_best_hand()
     # test_best_wild_hand()

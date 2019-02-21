@@ -27,7 +27,6 @@ from itertools import combinations
 
 
 ranks_numbers = list(range(2, 15))
-ranks_numbers_revers_str = ' '.join(str(x) for x in ranks_numbers[:-14:-1])
 ranks_names = list('23456789TJQKA')
 dict_card = dict(zip(ranks_names, ranks_numbers))
 
@@ -70,11 +69,6 @@ def flush(hand):
 def straight(ranks):
     """Возвращает True, если отсортированные ранги формируют последовательность 5ти,
     где у 5ти карт ранги идут по порядку (стрит)"""
-    # its_street = ' '.join(str(x) for x in ranks)
-    #     # if its_street in ranks_numbers_revers_str:
-    #     #     return True
-    #     # else:
-    #     #     return False
     return set(map(lambda x, y: x - y, ranks, ranks[1:])) == {1}
 
 

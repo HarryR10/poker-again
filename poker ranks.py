@@ -23,9 +23,8 @@
 # Можно свободно определять свои функции и т.п.
 # -----------------
 
-# import itertools
 from itertools import combinations
-from collections import Counter
+
 
 ranks_numbers = list(range(2, 15))
 ranks_numbers_revers_str = ' '.join(str(x) for x in ranks_numbers[:-14:-1])
@@ -60,42 +59,40 @@ def hand_rank(hand):
 def card_ranks(hand):
     """Возвращает список рангов (его числовой эквивалент),
     отсортированный от большего к меньшему"""
-    # ranks_sorted = sorted([dict_card.get(x[0]) for x in hand], reverse=True)
-    # return ranks_sorted
     return sorted([dict_card.get(x[0]) for x in hand], reverse=True)
 
 
 def flush(hand):
     """Возвращает True, если все карты одной масти"""
-    # its_flush = set(x[1] for x in hand)
-    # if len(its_flush) == 1:
-    #     return True
-    # else:
-    #     return False
     return len(set(x[1] for x in hand)) == 1
 
 
 def straight(ranks):
     """Возвращает True, если отсортированные ранги формируют последовательность 5ти,
     где у 5ти карт ранги идут по порядку (стрит)"""
-    its_street = ' '.join(str(x) for x in ranks)
-    if its_street in ranks_numbers_revers_str:
-        return True
-    else:
-        return False
+    # its_street = ' '.join(str(x) for x in ranks)
+    #     # if its_street in ranks_numbers_revers_str:
+    #     #     return True
+    #     # else:
+    #     #     return False
+    return set(map(lambda x, y: x - y, ranks, ranks[1:])) == {1}
 
 
 def kind(n, ranks):
     """Возвращает первый ранг, который n раз встречается в данной руке.
     Возвращает None, если ничего не найдено"""
-
+    global first_range
     first_range = []
-    reapeat = dict(Counter(ranks))
+    reapeat = {x: ranks.count(x) for x in ranks}    # метод count действительно есть)
+    # reapeat = dict(Counter(ranks))
     for x in reapeat:
         if reapeat.get(x) == n:
             first_range.append(x)
-    if len(first_range) > 0:
+    if len(first_range) == 1:
         return max(first_range)
+    elif len(first_range) == 2:
+        first_range.sort(reverse=True)
+        return first_range[0:2]
     else:
         return None
 
@@ -104,17 +101,7 @@ def kind(n, ranks):
 def two_pair(ranks):
     """Если есть две пары, то возврщает два соответствующих ранга,
     иначе возвращает None"""
-
-    first_range = []
-    reapeat = dict(Counter(ranks))
-    for x in reapeat:
-        if reapeat.get(x) == 2:
-            first_range.append(x)
-    if len(first_range) >= 1:
-        first_range.sort(reverse=True)
-        return first_range[0:2]
-    else:
-        return None
+    return kind(2, ranks)    # Это будет работать, т.к. условие two_pair вызывается раньше чем kind(2, ranks)
 
 
 def best_hand(hand):
@@ -151,15 +138,5 @@ def test_best_wild_hand():
     print('OK')
 
 if __name__ == '__main__':
-    print(best_hand("6C 7C 8C 9C TC 5C JS".split()))
-    print(best_hand("TD TC TH 7C 7D 8C 8S".split()))
-    print(best_hand("JD TC TH 7C 7D 7S 7H".split()))
-    print(flush(['6C', '7C', '8C', '9C', 'TC']))
-    print(card_ranks(['6C', '7C', '8C', '9C', 'TC']))
-    ranks = card_ranks(['6C', '7C', '8C', '9C', 'TC'])
-    its_street2 = set(x for x in ranks)
-
-    print(its_street2)
-
     test_best_hand()
     # test_best_wild_hand()
